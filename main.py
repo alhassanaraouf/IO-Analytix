@@ -17,4 +17,4 @@ print(test.translate("أنا مندهش لرؤية فقط كيف مثير للد
 
 twitter = TwitterApi()
 print(twitter.Search('mi', 3, 'en'))
-print(twitter.AccountTweets('alhassanaraouf', 1))
+print(twitter.AccountTweets('qabeeljr', 1))
