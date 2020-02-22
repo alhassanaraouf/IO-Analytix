@@ -1,6 +1,6 @@
 from Database import Client
-from Preprocessing import Cleaning
-from Preprocessing import Translation
+from TextProcessing import Cleaning
+from TextProcessing import Translation
 from API import TwitterApi
 test = Client('radwa', '123456as')
 test.connect()

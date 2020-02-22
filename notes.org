@@ -2,15 +2,17 @@
 * TODO Text Processing Module
 ** TODO PreProcessing
 ** TODO Translating
+** TODO Language Detection
 * TODO APIs Module
-** Twitter API
-** Mastodon API
-** Pixelfed API
-** Facebook API
+** TODO Twitter API
+** TODO Mastodon API
+** TODO Pixelfed API
+** TODO Facebook API
 * Documentation
-** Setup Sphinx
-** Setup PlanUML
-** Configure Sphinx with PlanUML and Autodoc
+** DONE Setup Sphinx
+** DONE Setup PlanUML
+** DONE Configure Sphinx with PlanUML and Autodoc
+** TODO Analysis Part
 * Others
-** TODO Uploading to Github
-** Write README
+** TODO Uploading to Git Host
+** TODO Write README
