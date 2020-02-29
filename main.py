@@ -1,7 +1,7 @@
-from Database import Client
-from TextProcessing import Cleaning
-from TextProcessing import Translation
-from API import TwitterApi
+from Sentiment.Database import Client
+from Sentiment.TextProcessing import Cleaning
+from Sentiment.TextProcessing import Translation
+from Sentiment.API import TwitterApi
 test = Client('radwa', '123456as')
 test.connect()
 print(test.tdata()[0])
@@ -11,9 +11,9 @@ test = Cleaning()
 
 print(test.preprocess(text))
 
-test = Translation('en')
+test = Translation()
 
-print(test.translate("أنا مندهش لرؤية فقط كيف مثير للدهشة فيدر فائدة!", 'ar'))
+print(test.translate("שמי אל-חסן אשיש", 'en'))
 
 twitter = TwitterApi()
 print(twitter.Search('mi', 3, 'en'))

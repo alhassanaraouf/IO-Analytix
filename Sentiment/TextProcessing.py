@@ -8,6 +8,8 @@ from nltk.corpus import stopwords
 from nltk import pos_tag
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
+from langdetect import detect, DetectorFactory
+DetectorFactory.seed = 0
 warnings.filterwarnings('ignore')
 nltk.download('stopwords')
 nltk.download('averaged_perceptron_tagger')
@@ -32,7 +34,7 @@ class Cleaning:
             return wordnet.NOUN
 
     def preprocess(self, text):
-           
+
         # lowercase the text
         text = text.lower()
         # Remove username:
@@ -46,10 +48,10 @@ class Cleaning:
         text = [x for x in text if x not in stop]
         # remove the words that contain numbers
         text = [word for word in text if not any(c.isdigit() for c in word)]
-        
+
         # remove tokens that are empty
         text = [t for t in text if len(t) > 0]
-        
+
         # pos tag the text
         pos_tags = pos_tag(text)
         # lemmatize the text
@@ -69,11 +71,13 @@ class Cleaning:
 
 class Translation:
 
-    def __init__(self, to_lang):
-        self.to_lang = to_lang
+    def __init__(self):
+        pass
 
-    def translate(self, text, from_lang):
-        api_url = "http://mymemory.translated.net/api/get?q={}&langpair={}|{}".format(text, from_lang, self.to_lang)
+    def translate(self, text, to_lang, from_lang=''):
+        if from_lang == '':
+            from_lang = detect(text)
+        api_url = "http://mymemory.translated.net/api/get?q={}&langpair={}|{}".format(text, from_lang, to_lang)
         hdrs = {
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
