@@ -1,6 +1,6 @@
 Database Module
 ===============
 
-.. automodule:: Database
+.. automodule:: Sentiment.Database
 
-.. autoclass:: Database.Client
+.. autoclass:: Sentiment.Database.Client

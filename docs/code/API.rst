@@ -1,6 +1,6 @@
 API Module
 ==========
-.. automodule:: API
+.. automodule:: Sentiment.API
    
    .. autoclass:: BearerAuth
       :members:
