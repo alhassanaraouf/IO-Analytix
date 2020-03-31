@@ -2,15 +2,17 @@ from Sentiment.Database import Client
 from Sentiment.TextProcessing import Cleaning
 from Sentiment.TextProcessing import Translation
 from Sentiment.API import TwitterApi
-from Sentiment.Sentiment import polarity_scores
+from Sentiment.Sentiment import Sentiment
+from Sentiment.Sentiment import Aspects
 
 test = Client('radwa', '123456as')
 test.connect()
-print(test.tdata()[0])
+print(test.getdata("twitter")[0])
 
 text = test.tdata()[0]['text']
-test = Cleaning()
 
+test = Cleaning()
+text = "Our car insurance is due to be renewsed goooooooooooooooooooooooooooooooooood, in Aprisl! This is what my Apple News feed looks like right now. :'D :''''''D @alhassanaraouf https://facebook.com"
 print(test.preprocess(text))
 
 test = Translation()
@@ -21,4 +23,10 @@ twitter = TwitterApi()
 print(twitter.Search('mi', 3, 'en'))
 print(twitter.AccountTweets('qabeeljr', 1))
 
-print(polarity_scores("good"))
+print(Sentiment.polarity_scores("good"))
+
+
+db = Client("qabeel", "123456as").connect()
+test = Aspects(db)
+
+print(test.getRelated("app"))

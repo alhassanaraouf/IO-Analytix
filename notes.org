@@ -2,16 +2,22 @@
 ** Is User can see Original Content?
 * TODO Database
 ** TODO Data Schema
+   (Platform), Beta(Platform)
 * TODO Database Module
   is it necessary?
-** Get List of Tweets or Posts
+** DONE Get List of Clean Tweets or Posts
+** 
 * TODO Text Processing Module
-** DONE Language Detection
-** DONE Translating
-** TODO PreProcessing
-*** TODO Cleaning
-**** TODO Text Correction
-**** TODO Removing URLs
+** DONE Get Aspects Related Words
+** DONE PreProcessing
+*** DONE Cleaning
+**** DONE Text Correction
+***** DONE don't remove punctuation
+***** DONE Don't correct Emoticons
+***** DONE correct words like "goooooooooooooood"
+**** DONE Removing URLs
+*** DONE Language Detection
+*** DONE Translating
 ** TODO Sentence Tokenization
 * TODO APIs Module
 ** DONE Twitter API
@@ -43,10 +49,10 @@
 *** TODO Visualize The Summary Data in Charts
     Using D3js Library
 ** Back-end
-*** TODO Search in list of Tweets
+*** DONE Search in list of Tweets
     MongoDB Query Language
     Try in MongoDB First
-*** TODO Getting Score of Each Tweet in List
+*** DONE Getting Score of Each Tweet in List
 *** TODO User Management System(Registration and Login)
 **** User History
 **** User Bookmark

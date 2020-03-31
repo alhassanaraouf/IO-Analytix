@@ -1,0 +1,414 @@
+* software
+** os
+*** operating system
+*** Android
+**** CyanogenMod
+*** ios
+**** AirPlay
+*** blackberry os
+*** BlackBerry Playbook OS
+*** Bada OS
+*** Firefox OS
+*** Windows Mobile
+*** Windows Phone OS
+*** LiMo OS
+*** Linux
+*** Maemo OS
+*** MeeGo OS
+*** watchOS
+*** Wear OS
+*** webOS
+*** Symbian
+**** UIQ
+**** S60 user interface
+** app
+*** apple pay
+*** Browser
+*** Calculator
+*** Calendar
+*** Email client
+*** Alarm Clock
+*** Music Player
+*** To-Do list
+*** Phonebook
+** Software Misc.
+*** UI 
+**** User Interface
+**** Theme
+*** Custom ringtones
+*** Ringing profiles
+*** Polyphonic ringtones
+*** monophony ringtones
+*** Emoji
+*** Firmware
+*** Handwriting recognition
+*** Airplane mode
+*** Flight mode
+*** FOTA (Firmware Over-The-Air)
+*** OTA (Over-The-Air)
+*** Video call
+*** Voice dialing
+*** Voice mail
+*** Voice memo
+*** Geo-tag
+* hardware
+** camera
+*** Digital Zoom
+*** Optical Zoom
+*** Auto-focus
+*** Fixed-focus
+*** Secondary camera
+*** Megapixel
+*** Camera Resolution
+*** Aperture
+*** CMOS
+**** Complementary metal-oxidesemiconductor
+*** CCD
+*** Image Signal Processor (ISP)
+*** Macro
+** display
+*** amoled
+**** active-matrix organic light-emitting diode
+*** OLED
+**** Organic Light-Emitting Diode
+*** Color depth
+*** Screen protection
+**** Corning Gorilla Glass
+*** Display type
+*** LCD (Liquid Crystal Display)
+*** Transflective
+*** LED (Light-Emitting Diode)
+*** Pixel
+*** Pixel density (Pixels Per Inch)
+*** TFD (Thin Film Diode)
+*** TFT (Thin Film Transistor)
+*** CIF 
+**** Common Intermediate Format
+*** QCIF
+**** Quarter Common Intermediate Format
+*** SQCIF
+**** Sub Quarter Common Intermediate Format
+*** CSTN 
+**** Color Super Twisted Nematic
+*** STN 
+**** Super Twisted Nematic
+*** Display Resolution
+*** QVGA (Quarter Video Graphics Array)
+*** VGA (Video Graphics Array)
+*** SVGA (Super Video Graphics Array)
+*** External Display
+*** Monochrome
+** ram
+*** Random-Access Memory
+** Chipset
+*** cpu
+**** Central Processing Unit
+*** gpu 
+**** Graphics Processing Unit
+** battery
+*** Battery Charging
+*** mAh
+*** Li-Ion (Lithium Ion)
+*** Li-Polymer (Lithium Polymer)
+*** Music playback time (battery life)
+*** Stand-by time (battery life)
+*** Talk time (battery life)
+*** NiCd (Nickel Cadmium)
+*** NiMH (Nickel Metal Hydride)
+** sensors
+*** touchscreen
+**** Capacitive Touchscreen
+**** Resistive touchscreen
+**** Multitouch input method
+*** gps
+**** Global Positioning System
+**** agps
+**** assisted gps
+**** a-gps
+**** Connected GPS
+**** Galileo (Global Navigation Satellite System)
+**** GLONASS (Global Navigation Satellite System)
+**** BeiDou Navigation Satellite System
+**** Quasi-Zenith Satellite System (QZSS)
+*** accelerometer
+*** Biometrics
+*** Magnetometer
+** ports
+*** charger
+*** 3.5mm headphone jack
+*** audio jack
+*** External Antenna Jack
+*** Memory card slot
+**** SD (Secure Digital)
+**** microSD
+**** Transflash
+**** microSDHC
+**** miniSD
+**** MMC (Multi Media Card)
+**** MMCmobile
+**** RS-MMC (Reduced-Size Multi Media Card)
+*** usb
+**** Universal Serial Bus
+**** OTG
+**** USB On-The-Go
+**** Mini-USB
+**** Micro USB
+**** Flash Memory
+*** Mobile High-Definition Link (MHL)
+*** Mobility DisplayPort (MyDP)
+**** Slimport
+*** SIM
+**** subscriber identity module
+**** USIM
+**** micro-sim
+**** mini-sim
+** Network
+*** Phone Book Access (PBA)
+*** CDMA (Code-Division Multiple Access)
+*** CDMA2000
+*** EV-DO
+*** EV-DV
+*** Cell
+*** GPRS
+*** Broadband
+*** Analog
+*** 1g
+*** 2g
+*** 3G
+*** 4G
+*** 5G
+*** Antenna
+*** 802.11
+*** bluetooth
+**** A2DP 
+***** Advanced Audio Distribution Profile
+**** AVRCP 
+***** Audio/Video Remote Control Profile
+**** EDR
+***** Enhanced Data Rate
+**** HSP (Headset Profile)
+**** SAP (SIM Access Profile)
+*** Carrier
+*** Band
+**** Frequency
+*** Single-Band
+*** Dual-band
+*** Tri-band
+*** Quad-band
+*** Dual-Mode
+*** Dual-SIM
+*** EDGE
+**** EGPRS
+**** Enhanced Data for Global Evolution
+*** GSM
+**** EGSM 
+***** Extended GSM
+*** eSIM
+*** FTP 
+**** File Transfer Protocol
+*** NFC
+**** Near Field Communication
+*** Wi-Fi
+*** WLAN
+*** Tethering
+*** VoIP 
+**** Voice over Internet Protocol
+*** VPN 
+**** Virtual Private Network
+*** WAP 
+**** Wireless Application protocol
+*** HotSpot
+*** UMA
+****  Unlicensed Mobile Access
+*** UMTS
+**** Universal Mobile Telecommunications System
+*** WCDMA
+**** Wideband Code Division Multiple Access
+*** ANT+
+*** APN
+**** Access Point Name
+*** DC-HSDPA
+**** Dual Carrier or Dual Cell High-Speed Downlink Packet Access
+*** DLNA 
+**** Digital Living Network Alliance
+*** Downlink
+*** HSCSD (High-Speed Circuit Switched Data)
+*** HSDPA (High-Speed Downlink Packet Access)
+*** HSDPA+ (High-Speed Downlink Packet Access Plus)
+*** HSUPA (High-Speed Uplink Packet Access)
+*** iDEN (Integrated Digital Enhanced Network)
+*** IrDA (Infrared Data Association)
+*** Long Term Evolution (LTE)
+*** Mobile WiMAX
+*** PCS (Personal Communications Service)
+*** TD-SCDMA (Time Division-Synchronous Code Division Multiple Access)
+** Radio
+*** FM Radio
+*** FM Transmitter
+*** RDS (Radio Data System)
+*** RBDS (Radio Broadcast Data System)
+** Speaker
+*** Loudspeaker
+*** Stereo Speakers
+*** DNSe (Digital Natural Sound engine)
+** Hardware Misc.
+*** D-Pad 
+**** Direction Pad
+*** Trackball
+*** Stylus
+*** aptX
+*** OEM (Original Equipment Manufacturer)
+*** Crosstalk
+*** Exchangeable covers
+*** Haptics
+*** Hot Swap
+*** IMEI (International Mobile Equipment Identity)
+*** Key Lock Switch
+*** Side Keys
+*** Storage
+**** ROM (Read-Only Memory)
+**** Dynamic Memory 
+**** UFS (Universal Flash Storage)
+*** sim lock
+*** Unlocked phone
+*** UPnP (Universal Plug and Play)
+* price
+** value
+** monetary value
+** worth
+** valuation
+** premium
+** bid price
+** commodity
+** toll
+** overprice
+** purchase price
+** spot price
+** currency
+** costs
+** sale
+** discount
+** stock
+** pay
+** amount
+** demand
+** buying
+** trading
+** selling
+** expense
+** money
+** dollar
+** payment
+** costly
+** prise
+** priceless
+** undervalue
+** pennyworth
+** invaluable
+** unpriced
+** economy
+** eigenvalue
+** underrate
+** prices
+** underprice
+** valueless
+** valuable
+** worthy
+** sales
+** undervaluation
+** overvalue
+** valuate
+** valueness
+** expensiveness
+** underquote
+** inexpensiveness
+** misvalue
+** disvalue
+** earnings
+** valuelessness
+** equivalue
+** unvaluable
+** valuably
+** valuator
+** upvalue
+** overestimate
+** costless
+** profit
+** profits
+** bond
+** revenue
+** yields
+** purchases
+** invaluableness
+** sell
+** quarter
+** cash
+** buy
+** credit
+** investors
+** limit
+** pricing
+** risen
+** drops
+** dollars
+** purchase
+** precious
+** outprice
+** cheapen
+** fee
+** fares
+** fees
+** expensive
+** bid
+** financial compensation
+** fare
+** invoice
+** pricey
+** deal
+** costning
+** valorem
+** design to cost
+** how much
+** opportunity cost
+** prizes
+** overcapitalize
+** prix
+** unit cost
+** cost overrun
+** postmaterialism
+** marginal cost
+** differential cost
+** asking price
+** selling price
+** closing price
+** factory price
+** incremental cost
+** cash price
+** average cost
+** affordability
+** premio
+** sellers
+** resale
+** purchasers
+** buyers
+** underpay
+** self worth
+** low cost
+** profit take
+** negative equity
+** sales quote
+** price be right
+** market value
+** top dollar
+** money's worth
+** financial investment
+** capital loss
+** land cost
+** law of one price
+** paradox of value
+** intrinsic value
+** market capitalization
+** appraised value
+** marginal benefit
+** yen
+** euro

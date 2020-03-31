@@ -7,32 +7,25 @@ class Client:
     def __init__(self, username, password):
         self.username = username
         self.password = password
+        self.db = None
 
-        db = ""
-
-    def connect(self):
+    def connect(self, Database="GP"):
         client = pymongo.MongoClient("mongodb+srv://"+self.username+":"+self.password +
                                      "@alhassantest-3226x.azure.mongodb.net/test?retryWrites=true&w=majority")
-        global db
-        db = client.GP
+        self.db = client[Database]
+        return self.db
 
-    def tdata(self, Q=""):
-        """Get Twitter Data"""
+    def getData(self, Platform, Q=""):
+        """Get PreProcessed Data """
         if Q != "":
-            return(db.twitter.find(Q))
+            return(self.db[Platform].find(Q))
         else:
-            return(db.twitter.find())
+            return(self.db[Platform].find())
 
-    def mdata(self, Q=""):
-        """Get Mastodon Data"""
+    def getBetaData(self, Platform, Q=""):
+        """Get PreProcessed Data """
+        Platform = "Beta"+Platform
         if Q != "":
-            return(db.mastodon.find(Q))
+            return(self.db[Platform].find(Q))
         else:
-            return(db.mastodon.find())
-
-    def rdata(self, Q=""):
-        """Get Reddit Data"""
-        if Q != "":
-            return(db.reddit.find(Q))
-        else:
-            return(db.reddit.find())
+            return(self.db[Platform].find())
