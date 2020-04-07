@@ -3,7 +3,8 @@ import hashlib
 import orgparse as org
 import math
 import string
-
+import sqlite3
+import os
 
 class Sentiment:
 
@@ -347,16 +348,18 @@ class Sentiment:
 
 class Aspects:
 
-    def __init__(self, db):
+    def __init__(self):
         "docstring"
-        self.db = db
-        self.collection = db["aspects"]
         pass
 
-    def uploadfile(self, file=""):
-        if file == "":
-            file = "dict/bagofwords.org"
-        data = org.load(file)
+    
+    def uploadfile(self):
+        if os.path.exists("dict/bagofwords.db"):
+            os.remove("dict/bagofwords.db")
+        client = sqlite3.connect('dict/bagofwords.db')
+        db = client.cursor()
+        db.execute('''CREATE TABLE words (id text, keyword text, parent text)''')
+        data = org.load("dict/bagofwords.org")
         for x in data[1:]:
             temp = {}
             id = bytes(x.heading.lower(), 'utf-8')
@@ -369,37 +372,24 @@ class Aspects:
                 parent = bytes(x.parent.heading.lower(), 'utf-8')
                 parent = hashlib.md5(parent).hexdigest()
                 temp["parent"] = parent
-            #    print(temp)
-            self.collection.insert_one(temp)
+            db.execute("INSERT INTO words VALUES (?,?,?)", (temp["_id"], temp["keyword"], temp["parent"]))
+        client.commit()
+        client.close()
+
 
     def getRelated(self, keyword):
+        client = sqlite3.connect('dict/bagofwords.db')
+        db = client.cursor()
         keyword = keyword.lower()
         keys = []
         keys.append(keyword)
         h = bytes(keyword, 'utf-8')
         h = hashlib.md5(h).hexdigest()
-        temp = self.collection.find_one({"_id": h})
+        temp = db.execute('SELECT * FROM words WHERE id=?', (h,)).fetchone()
         if temp is None:
             return
-        while temp["parent"] != "":
-            temp = self.collection.find_one({"_id": temp["parent"]})
-            keys.append(temp["keyword"])
+        while temp[2] != "":
+            temp = db.execute('SELECT * FROM words WHERE id=?', (temp[2],))
+            temp = temp.fetchone()
+            keys.append(temp[1])
         return keys
-
-    def addsynonmce(self, synonmce, keyword):
-        keyword = keyword.lower()
-        synonmce = synonmce.lower()
-        h = bytes(keyword, 'utf-8')
-        h = hashlib.md5(h).hexdigest()
-        temp = self.collection.find_one({"_id": h})
-        if "synonmce" in temp:
-            temp["synonmce"].append(synonmce)
-        else:
-            temp["synonmce"] = [synonmce]
-        self.collection.replace_one({"_id": h}, temp)
-
-    # uploadfile()
-
-    # print(type(getRelated("addmoled")))
-
-    # addsynonmce("Application", "app")

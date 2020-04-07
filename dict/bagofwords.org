@@ -248,6 +248,7 @@
 *** RDS (Radio Data System)
 *** RBDS (Radio Broadcast Data System)
 ** Speaker
+*** sound
 *** Loudspeaker
 *** Stereo Speakers
 *** DNSe (Digital Natural Sound engine)

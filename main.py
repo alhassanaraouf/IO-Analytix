@@ -12,7 +12,7 @@ print(test.getdata("twitter")[0])
 text = test.tdata()[0]['text']
 
 test = Cleaning()
-text = "Our car insurance is due to be renewsed goooooooooooooooooooooooooooooooooood, in Aprisl! This is what my Apple News feed looks like right now. :'D :''''''D @alhassanaraouf https://facebook.com"
+text = "Our car insurance is due to be renewsed goooooooooooooooooooooooooooooooooood, in Aprisl! This is what my Apple News feed looks like right-now. #goodpeople #good-people #good_people #gosaam #asdasdasdas :'D :''''''D @alhassanaraouf https://facebook.com oled UMTSs WCDsMA "
 print(test.preprocess(text))
 
 test = Translation()
@@ -26,7 +26,6 @@ print(twitter.AccountTweets('qabeeljr', 1))
 print(Sentiment.polarity_scores("good"))
 
 
-db = Client("qabeel", "123456as").connect()
-test = Aspects(db)
-
-print(test.getRelated("app"))
+test = Aspects()
+#test.uploadfile()
+print(test.getRelated("oled"))

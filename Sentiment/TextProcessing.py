@@ -2,6 +2,7 @@ import warnings
 import re
 import json
 import requests
+import sqlite3
 from enchant.checker import SpellChecker
 from langdetect import detect, DetectorFactory
 DetectorFactory.seed = 0
@@ -14,7 +15,12 @@ class Cleaning:
         pass
 
     def Spellcorection(self, text):
+        client = sqlite3.connect('dict/bagofwords.db')
+        db = client.cursor()
+        temp = db.execute("SELECT * FROM words").fetchall()
         spell = SpellChecker("en_US")
+        for x in temp:
+            spell.add(x[1])
         spell.set_text(text)
         for err in spell:
             err.replace(err.suggest()[0])
@@ -24,6 +30,14 @@ class Cleaning:
 
         # Remove username:
         text = re.sub('@[^\s]+', '', text)
+        # Remove Hashtag
+        hashtag_re = re.compile("([#][\w_-]+)")
+        hashtags = hashtag_re.findall(text)
+        if len(hashtags) > 0:
+            for x in hashtags:
+                temp = x
+                temp = temp.replace('#', '').replace('_', ' ').replace('-', ' ')
+                text = text.replace(x, temp)
         # Remove URLs
         text = re.sub(
             r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', " ", text)
