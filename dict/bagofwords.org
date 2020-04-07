@@ -31,7 +31,7 @@
 *** Music Player
 *** To-Do list
 *** Phonebook
-** Software Misc.
+** misc
 *** UI 
 **** User Interface
 **** Theme
@@ -39,6 +39,7 @@
 *** Ringing profiles
 *** Polyphonic ringtones
 *** monophony ringtones
+*** Ringing profiles
 *** Emoji
 *** Firmware
 *** Handwriting recognition
@@ -59,7 +60,7 @@
 *** Fixed-focus
 *** Secondary camera
 *** Megapixel
-*** Camera Resolution
+*** Resolution
 *** Aperture
 *** CMOS
 **** Complementary metal-oxidesemiconductor
@@ -92,7 +93,7 @@
 **** Color Super Twisted Nematic
 *** STN 
 **** Super Twisted Nematic
-*** Display Resolution
+*** Resolution
 *** QVGA (Quarter Video Graphics Array)
 *** VGA (Video Graphics Array)
 *** SVGA (Super Video Graphics Array)
@@ -248,11 +249,10 @@
 *** RDS (Radio Data System)
 *** RBDS (Radio Broadcast Data System)
 ** Speaker
-*** sound
 *** Loudspeaker
 *** Stereo Speakers
 *** DNSe (Digital Natural Sound engine)
-** Hardware Misc.
+** misc
 *** D-Pad 
 **** Direction Pad
 *** Trackball
