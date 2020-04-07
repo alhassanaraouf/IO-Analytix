@@ -118,7 +118,7 @@ class Sentiment:
         else:
             return norm_score
 
-    def _strip_punc_if_word(token):
+    def _strip_punc_if_word(self, token):
         """
         Removes all trailing and leading punctuation
         If the resulting string has two or fewer characters,
@@ -275,7 +275,7 @@ class Sentiment:
                 valence = valence * self.N_SCALAR
         return valence
 
-    def _but_check(words_and_emoticons, sentiments):
+    def _but_check(self, words_and_emoticons, sentiments):
         # check for modification in sentiment due to contrastive conjunction 'but'
         words_and_emoticons_lower = [str(w).lower() for w in words_and_emoticons]
         if 'but' in words_and_emoticons_lower:

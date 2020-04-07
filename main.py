@@ -23,7 +23,8 @@ twitter = TwitterApi()
 print(twitter.Search('mi', 3, 'en'))
 print(twitter.AccountTweets('qabeeljr', 1))
 
-print(Sentiment.polarity_scores("good"))
+test = Sentiment()
+print(test.polarity_scores("good"))
 
 
 test = Aspects()
