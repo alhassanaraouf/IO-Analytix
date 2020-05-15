@@ -1,13 +1,12 @@
-from Sentiment.Database import Client
-from Sentiment.TextProcessing import Cleaning
-from Sentiment.TextProcessing import Translation
 from Sentiment.API import TwitterApi
-from Sentiment.Sentiment import Sentiment
-from Sentiment.Sentiment import Aspects
+from Sentiment.Database import Client
+from Sentiment.Sentiment import Sentiment, Aspects
+from Sentiment.TextProcessing import Cleaning, Translation
+
 
 test = Client('radwa', '123456as')
 test.connect()
-print(test.getdata("twitter")[0])
+print(test.getData("twitter")[0])
 
 text = test.tdata()[0]['text']
 
@@ -28,5 +27,5 @@ print(test.polarity_scores("good"))
 
 
 test = Aspects()
-#test.uploadfile()
+# test.uploadfile()
 print(test.getRelated("oled"))

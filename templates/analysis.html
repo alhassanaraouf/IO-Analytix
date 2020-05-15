@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+
+{% block body %}
+
+<div class="container">
+	<form method="POST">
+		{{ render_form(form) }}	
+	</form>
+</div>
+
+
+<div id="graphDiv"></div>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+{% for t in data %}
+
+<p> {{ t }} </p>
+</br>
+{% endfor %}
+
+
+
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-7">
+      <p id="header">
+	We help Marketers measure the impact of social media on their brand </p>
+      <p class="text-center" id="subheader">Get instant access to brand mention across social platforms news, blogs, videos, fourms, reviews and more </p>
+    </div>
+    <div class="col-5">
+      <img width="500px" src="{{ url_for('static', filename='images/header.png') }}">
+    </div>
+  </div>
+</div>
+
+<div id="about" class="container-flued">
+  <img width="130px" class="center-block" src="{{ url_for('static', filename='images/sprater.png') }}">
+  <p id="aboutparagraph" class="text-center">
+    You're in <b>good company</b>
+  </p>
+  
+  <img width="130px" class="center-block" src="{{ url_for('static', filename='images/sprater.png') }}">
+</div>
+
+<p id="trackpara" class="text-center">
+  Track, Measure and report on your social campaigns endless times
+</p>
+
+<div id="feature" class="container">
+  <div class="row">
+    <div class="col align-self-center">
+      <p class="text-center">
+	1. Track Data Accurately
+      </p>
+    </div>
+    <div class="col">
+      <p class="text-center">
+	2. Measure Every Metric
+      </p>
+    </div>
+    <div class="col">
+      <p class="text-center">
+	3. Prove Campaign Impact & ROI
+      </p>
+    </div>
+    <div class="col">
+      <p class="text-center">
+	4. Report On Time, Every Time
+      </p>
+    </div>
+  </div>
+  
+</div>
+
+
+<div class="container tile">
+  <div class="row">
+    <div class="col-7">
+      <p class="text-center fetu">
+	Protect Your Online reputation
+	<br>
+	Automated Sentiment Analysis
+	<br>
+	Instant Notification
+      </p>
+    </div>
+    <div class="col-5">
+      <img width="500px" src="{{ url_for('static', filename='images/1.png') }}">
+    </div>
+  </div>
+</div>
+
+<div class="container tile">
+  <div class="row">
+    <div class="col-6">
+      <img width="500px" src="{{ url_for('static', filename='images/2.png') }}">
+    </div>
+    <div class="col-6">
+      <p class="text-center fetu" style="padding:auto;">
+	Hashtag tracking
+	<br>
+	Hashtag Reach
+	<br>
+	Hashtag Volume
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container tile">
+  <div class="row">
+    <div class="col-6">
+      <p class="text-center fetu">
+	Protect Your Online reputation
+	<br>
+	Automated Sentiment Analysis
+	<br>
+	Instant Notification
+      </p>
+    </div>
+    <div class="col-6">
+      <img width="500px" src="{{ url_for('static', filename='images/3.png') }}">
+    </div>
+  </div>
+</div>	
+<br>
+
+
+{% endblock %}
