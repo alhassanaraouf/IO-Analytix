@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template  # , session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from flask_fontawesome import FontAwesome
@@ -51,7 +51,7 @@ def internal_server_error(e):
 
 def makedatalist(key):
     temp = []
-    cur = db.getData('twitter', key)
+    cur = db.getData('cleantwitter', key)
     for doc in cur:
         temp.append(doc['text'])
     data = []
