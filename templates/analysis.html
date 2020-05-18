@@ -4,6 +4,7 @@
 
 {% block body %}
 
+</br>
 <div class="container">
 	<form method="POST">
 		{{ render_form(form) }}	
@@ -11,16 +12,12 @@
 </div>
 
 
-<div id="graphDiv"></div>
-
-<script src="https://d3js.org/d3.v5.min.js"></script>
-
 {% for t in data %}
 
 <p> {{ t }} </p>
 </br>
 {% endfor %}
 
-
+</br>
 
 {% endblock %}

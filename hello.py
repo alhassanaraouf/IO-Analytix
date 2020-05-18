@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
+from flask_fontawesome import FontAwesome
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from Sentiment.Database import Client
@@ -13,10 +14,14 @@ db.connect()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
 app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+app.config['FONTAWESOME_SERVE_LOCAL'] = True
+app.config['FONTAWESOME_STYLES'] = 'all'
 Bootstrap(app)
+FontAwesome(app)
 
 base = {}
 base['name'] = "IO-Analytix"
+
 
 class KeyForm(FlaskForm):
     key = StringField('Enter Key Word', validators=[DataRequired()])
@@ -46,7 +51,7 @@ def internal_server_error(e):
 
 def makedatalist(key):
     temp = []
-    cur = db.getData('cleantwitter')
+    cur = db.getData('twitter', key)
     for doc in cur:
         temp.append(doc['text'])
     data = []
@@ -66,6 +71,7 @@ def makedatalist(key):
     data.append(po)
     data.append(ne)
     return data
+
 
 @app.route('/')
 def index():

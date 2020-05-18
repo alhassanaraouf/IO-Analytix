@@ -23,7 +23,8 @@ class Cleaning:
             spell.add(x[1])
         spell.set_text(text)
         for err in spell:
-            err.replace(err.suggest()[0])
+            if len(err.suggest()) > 0:
+                err.replace(err.suggest()[0])
         return spell.get_text()
 
     def preprocess(self, text):

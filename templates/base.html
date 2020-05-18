@@ -6,7 +6,9 @@
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     {{ bootstrap.load_css() }}
     {{ bootstrap.load_js() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}"> -->
+    {{ fontawesome_css() }}
+    {{ fontawesome_js() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <title>{{ base['name'] }}</title>
     {% endblock %}

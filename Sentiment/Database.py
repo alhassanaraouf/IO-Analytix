@@ -18,14 +18,17 @@ class Client:
     def getData(self, Platform, Q=""):
         """Get PreProcessed Data """
         if Q != "":
-            return(self.db[Platform].find(Q))
+            Q = {
+                '$text': {'$search': Q}
+            }
+            #Q = '{ $text: { $search: ' + Q + ' } }'
+            return(self.db[Platform].find(Q, {'text': 1}, limit=100))
         else:
             return(self.db[Platform].find())
 
-    def getBetaData(self, Platform, Q=""):
-        """Get PreProcessed Data """
-        Platform = "Beta"+Platform
-        if Q != "":
-            return(self.db[Platform].find(Q))
-        else:
-            return(self.db[Platform].find())
+    # def getBetaData(self, Platform, Q=""):
+    #     """Get PreProcessed Data """
+    #     if Q != "":
+    #         return(self.db[Platform].find(Q))
+    #     else:
+    #         return(self.db[Platform].find())
