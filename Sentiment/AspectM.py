@@ -1,14 +1,15 @@
-from Sentiment import Sentiment
-from Sentiment import Aspects
+from Sentiment.Sentiment import Sentiment, Aspects
 from deepsegment import DeepSegment
 from enchant.checker import SpellChecker
 import pymongo
-import  pandas as pd
+import pandas as pd
 import re
-import nltk 
-nltk.download('stopwords')
+import nltk
 from nltk.corpus import stopwords
 from nltk import pos_tag
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 
 
 
@@ -124,4 +125,5 @@ def summary():
       tweet_list.append(tweet)
       
     return tweet_list   
+
 
