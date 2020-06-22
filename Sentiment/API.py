@@ -20,26 +20,26 @@ class TwitterApi:
         self.auth = BearerAuth(bearerkey)
         self.base = "https://api.twitter.com/1.1/"
 
-    def Search(self, quary, NumberOfPages, lang):
+    def Search(self, quary, NumberOfPages=2, lang="en"):
         """test"""
         PageCounter = 0
-        params = {'q': quary, 'count': 100, 'lang': lang, 'resulty_type': 'recent'}
+        params = {"q": quary, "count": 100, "lang": lang, "resulty_type": "recent"}
         api = "search/tweets.json"
         url = self.base + api
         tweets = []
         while PageCounter < NumberOfPages:
             PageCounter += 1
             res = requests.get(url, params=params, auth=self.auth)
-            res_json = res.json()['statuses']
-            ids = [i['id'] for i in res_json]
-            params['max_id'] = min(ids) - 1
+            res_json = res.json()["statuses"]
+            ids = [i["id"] for i in res_json]
+            params["max_id"] = min(ids) - 1
             tweets = tweets + res_json
         return tweets
 
     def AccountTweets(self, AccountName, NumberOfPages):
         """test"""
         PageCounter = 0
-        params = {'screen_name': AccountName, 'count': 1, 'exclude_replies': 'true'}
+        params = {"screen_name": AccountName, "count": 1, "exclude_replies": "true"}
         api = "statuses/user_timeline.json"
         url = self.base + api
 
@@ -48,7 +48,7 @@ class TwitterApi:
             PageCounter += 1
             res = requests.get(url, params=params, auth=self.auth)
             res_json = res.json()
-            ids = [i['id'] for i in res_json]
-            params['max_id'] = min(ids) - 1
+            ids = [i["id"] for i in res_json]
+            params["max_id"] = min(ids) - 1
             tweets = tweets + res_json
         return tweets

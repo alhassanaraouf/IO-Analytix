@@ -6,8 +6,8 @@ import string
 import sqlite3
 import os
 
-class Sentiment:
 
+class Sentiment:
     def __init__(self):
         "docstring"
         pass
@@ -18,29 +18,92 @@ class Sentiment:
     B_INCR = 0.293
     B_DECR = -0.293
 
-    BOOSTER_DICT = \
-        {"absolutely": B_INCR, "amazingly": B_INCR, "awfully": B_INCR,
-         "completely": B_INCR, "considerable": B_INCR, "considerably": B_INCR,
-         "decidedly": B_INCR, "deeply": B_INCR, "effing": B_INCR, "enormous": B_INCR, "enormously": B_INCR,
-         "entirely": B_INCR, "especially": B_INCR, "exceptional": B_INCR, "exceptionally": B_INCR,
-         "extreme": B_INCR, "extremely": B_INCR,
-         "fabulously": B_INCR, "flipping": B_INCR, "flippin": B_INCR, "frackin": B_INCR, "fracking": B_INCR,
-         "fricking": B_INCR, "frickin": B_INCR, "frigging": B_INCR, "friggin": B_INCR, "fully": B_INCR,
-         "fuckin": B_INCR, "fucking": B_INCR, "fuggin": B_INCR, "fugging": B_INCR,
-         "greatly": B_INCR, "hella": B_INCR, "highly": B_INCR, "hugely": B_INCR,
-         "incredible": B_INCR, "incredibly": B_INCR, "intensely": B_INCR,
-         "major": B_INCR, "majorly": B_INCR, "more": B_INCR, "most": B_INCR, "particularly": B_INCR,
-         "purely": B_INCR, "quite": B_INCR, "really": B_INCR, "remarkably": B_INCR,
-         "so": B_INCR, "substantially": B_INCR,
-         "thoroughly": B_INCR, "total": B_INCR, "totally": B_INCR, "tremendous": B_INCR, "tremendously": B_INCR,
-         "uber": B_INCR, "unbelievably": B_INCR, "unusually": B_INCR, "utter": B_INCR, "utterly": B_INCR,
-         "very": B_INCR,
-         "almost": B_DECR, "barely": B_DECR, "hardly": B_DECR, "just enough": B_DECR,
-         "kind of": B_DECR, "kinda": B_DECR, "kindof": B_DECR, "kind-of": B_DECR,
-         "less": B_DECR, "little": B_DECR, "marginal": B_DECR, "marginally": B_DECR,
-         "occasional": B_DECR, "occasionally": B_DECR, "partly": B_DECR,
-         "scarce": B_DECR, "scarcely": B_DECR, "slight": B_DECR, "slightly": B_DECR, "somewhat": B_DECR,
-         "sort of": B_DECR, "sorta": B_DECR, "sortof": B_DECR, "sort-of": B_DECR}
+    BOOSTER_DICT = {
+        "absolutely": B_INCR,
+        "amazingly": B_INCR,
+        "awfully": B_INCR,
+        "completely": B_INCR,
+        "considerable": B_INCR,
+        "considerably": B_INCR,
+        "decidedly": B_INCR,
+        "deeply": B_INCR,
+        "effing": B_INCR,
+        "enormous": B_INCR,
+        "enormously": B_INCR,
+        "entirely": B_INCR,
+        "especially": B_INCR,
+        "exceptional": B_INCR,
+        "exceptionally": B_INCR,
+        "extreme": B_INCR,
+        "extremely": B_INCR,
+        "fabulously": B_INCR,
+        "flipping": B_INCR,
+        "flippin": B_INCR,
+        "frackin": B_INCR,
+        "fracking": B_INCR,
+        "fricking": B_INCR,
+        "frickin": B_INCR,
+        "frigging": B_INCR,
+        "friggin": B_INCR,
+        "fully": B_INCR,
+        "fuckin": B_INCR,
+        "fucking": B_INCR,
+        "fuggin": B_INCR,
+        "fugging": B_INCR,
+        "greatly": B_INCR,
+        "hella": B_INCR,
+        "highly": B_INCR,
+        "hugely": B_INCR,
+        "incredible": B_INCR,
+        "incredibly": B_INCR,
+        "intensely": B_INCR,
+        "major": B_INCR,
+        "majorly": B_INCR,
+        "more": B_INCR,
+        "most": B_INCR,
+        "particularly": B_INCR,
+        "purely": B_INCR,
+        "quite": B_INCR,
+        "really": B_INCR,
+        "remarkably": B_INCR,
+        "so": B_INCR,
+        "substantially": B_INCR,
+        "thoroughly": B_INCR,
+        "total": B_INCR,
+        "totally": B_INCR,
+        "tremendous": B_INCR,
+        "tremendously": B_INCR,
+        "uber": B_INCR,
+        "unbelievably": B_INCR,
+        "unusually": B_INCR,
+        "utter": B_INCR,
+        "utterly": B_INCR,
+        "very": B_INCR,
+        "almost": B_DECR,
+        "barely": B_DECR,
+        "hardly": B_DECR,
+        "just enough": B_DECR,
+        "kind of": B_DECR,
+        "kinda": B_DECR,
+        "kindof": B_DECR,
+        "kind-of": B_DECR,
+        "less": B_DECR,
+        "little": B_DECR,
+        "marginal": B_DECR,
+        "marginally": B_DECR,
+        "occasional": B_DECR,
+        "occasionally": B_DECR,
+        "partly": B_DECR,
+        "scarce": B_DECR,
+        "scarcely": B_DECR,
+        "slight": B_DECR,
+        "slightly": B_DECR,
+        "somewhat": B_DECR,
+        "sort of": B_DECR,
+        "sorta": B_DECR,
+        "sortof": B_DECR,
+        "sort-of": B_DECR,
+    }
 
     def make_Negations_list(self):
         """
@@ -50,8 +113,8 @@ class Sentiment:
         Negations = file.read()
         file.close()
         Negations_list = []
-        for line in Negations.split('\n'):
-            word = line.strip().split('\t')[0]
+        for line in Negations.split("\n"):
+            word = line.strip().split("\t")[0]
             Negations_list.append(word)
         return Negations_list
 
@@ -64,10 +127,10 @@ class Sentiment:
         file.close()
 
         lexicon_dict = {}
-        for line in words.split('\n'):
+        for line in words.split("\n"):
             if not line:
                 continue
-            (words, score) = line.strip().split('\t')[0:2]
+            (words, score) = line.strip().split("\t")[0:2]
             lexicon_dict[words] = float(score)
         return lexicon_dict
 
@@ -75,13 +138,13 @@ class Sentiment:
         """
         Convert emoji lexicon file to a dictionary
         """
-        file = open("dict/emoji_utf8_lexicon.txt", encoding='utf-8')
+        file = open("dict/emoji_utf8_lexicon.txt", encoding="utf-8")
         emoji = file.read()
         file.close()
 
         emoji_dict = {}
-        for line in emoji.split('\n'):
-            (emoji, description) = line.strip().split('\t')[0:2]
+        for line in emoji.split("\n"):
+            (emoji, description) = line.strip().split("\t")[0:2]
             emoji_dict[emoji] = description
         return emoji_dict
 
@@ -99,10 +162,10 @@ class Sentiment:
             for word in input_words:
                 if "n't" in word:
                     return True
-        '''if "least" in input_words:
+        """if "least" in input_words:
             i = input_words.index("least")
             if i > 0 and input_words[i - 1] != "at":
-                return True'''
+                return True"""
         return False
 
     def normalize(self, score, alpha=15):
@@ -178,12 +241,12 @@ class Sentiment:
                 # get the textual description
                 description = emoji_dict[chr]
                 if not prev_space:
-                    text_no_emoji += ' '
+                    text_no_emoji += " "
                 text_no_emoji += description
                 prev_space = False
             else:
                 text_no_emoji += chr
-                prev_space = chr == ' '
+                prev_space = chr == " "
         text = text_no_emoji.strip()
         words_emoticons = self.words_and_emoticons(text)
 
@@ -195,8 +258,11 @@ class Sentiment:
             if item.lower() in Booster_dict:
                 sentiments.append(valence)
                 continue
-            if (i < len(words_emoticons) - 1 and item.lower() == "kind"
-                    and words_emoticons[i + 1].lower() == "of"):
+            if (
+                i < len(words_emoticons) - 1
+                and item.lower() == "kind"
+                and words_emoticons[i + 1].lower() == "of"
+            ):
                 sentiments.append(valence)
                 continue
             sentiments = self.sentiment_valence(valence, item, i, sentiments, text)
@@ -214,15 +280,23 @@ class Sentiment:
             valence = lexicon_dict[item_lowercase]
 
             # check for "no" as negation for an adjacent lexicon item vs "no" as its own stand-alone lexicon item
-            if item_lowercase == "no" and words_emoticons[
-                    i + 1].lower() in lexicon_dict:
+            if (
+                item_lowercase == "no"
+                and words_emoticons[i + 1].lower() in lexicon_dict
+            ):
                 # don't use valence of "no" as a lexicon item. Instead set it's valence to 0.0 and negate the next item
                 valence = 0.0
-            if (i > 0 and words_emoticons[i - 1].lower() == "no") \
-             or (i > 1 and words_emoticons[i - 2].lower() == "no") \
-             or (i > 2 and words_emoticons[i - 3].lower() == "no" and words_emoticons[i - 1].lower() in ["or", "nor"]):
+            if (
+                (i > 0 and words_emoticons[i - 1].lower() == "no")
+                or (i > 1 and words_emoticons[i - 2].lower() == "no")
+                or (
+                    i > 2
+                    and words_emoticons[i - 3].lower() == "no"
+                    and words_emoticons[i - 1].lower() in ["or", "nor"]
+                )
+            ):
                 valence = lexicon_dict[item_lowercase] * self.N_SCALAR
-        # check if sentiment laden word is in ALL CAPS (while others aren't)
+            # check if sentiment laden word is in ALL CAPS (while others aren't)
             if item.isupper() and is_all_cap:
                 if valence > 0:
                     valence += self.C_INCR
@@ -231,10 +305,13 @@ class Sentiment:
 
             for start_i in range(0, 3):
 
-                if i > start_i and words_emoticons[
-                        i - (start_i + 1)].lower() not in lexicon_dict:
-                    s = self.scalar_Booster_dict(words_emoticons[i - (start_i + 1)],
-                                            valence, is_all_cap)
+                if (
+                    i > start_i
+                    and words_emoticons[i - (start_i + 1)].lower() not in lexicon_dict
+                ):
+                    s = self.scalar_Booster_dict(
+                        words_emoticons[i - (start_i + 1)], valence, is_all_cap
+                    )
                     if start_i == 1 and s != 0:
                         s = s * 0.95
                     if start_i == 2 and s != 0:
@@ -252,23 +329,36 @@ class Sentiment:
             if self.negated([words_and_emoticons_lower[i - (start_i + 1)]]):
                 valence = valence * self.N_SCALAR
         if start_i == 1:
-            if words_and_emoticons_lower[i - 2] == "never" and \
-                    (words_and_emoticons_lower[i - 1] == "so" or
-                     words_and_emoticons_lower[i - 1] == "this"):
+            if words_and_emoticons_lower[i - 2] == "never" and (
+                words_and_emoticons_lower[i - 1] == "so"
+                or words_and_emoticons_lower[i - 1] == "this"
+            ):
                 valence = valence * 1.25
-            elif words_and_emoticons_lower[i - 2] == "without" and \
-                    words_and_emoticons_lower[i - 1] == "doubt":
+            elif (
+                words_and_emoticons_lower[i - 2] == "without"
+                and words_and_emoticons_lower[i - 1] == "doubt"
+            ):
                 valence = valence
             # 2 words preceding the lexicon word position
             elif self.negated([words_and_emoticons_lower[i - (start_i + 1)]]):
                 valence = valence * self.N_SCALAR
         if start_i == 2:
-            if words_and_emoticons_lower[i - 3] == "never" and \
-                    (words_and_emoticons_lower[i - 2] == "so" or words_and_emoticons_lower[i - 2] == "this") or \
-                    (words_and_emoticons_lower[i - 1] == "so" or words_and_emoticons_lower[i - 1] == "this"):
+            if (
+                words_and_emoticons_lower[i - 3] == "never"
+                and (
+                    words_and_emoticons_lower[i - 2] == "so"
+                    or words_and_emoticons_lower[i - 2] == "this"
+                )
+                or (
+                    words_and_emoticons_lower[i - 1] == "so"
+                    or words_and_emoticons_lower[i - 1] == "this"
+                )
+            ):
                 valence = valence * 1.25
-            elif words_and_emoticons_lower[i - 3] == "without" and \
-                    (words_and_emoticons_lower[i - 2] == "doubt" or words_and_emoticons_lower[i - 1] == "doubt"):
+            elif words_and_emoticons_lower[i - 3] == "without" and (
+                words_and_emoticons_lower[i - 2] == "doubt"
+                or words_and_emoticons_lower[i - 1] == "doubt"
+            ):
                 valence = valence
             # 3 words preceding the lexicon word position
             elif self.negated([words_and_emoticons_lower[i - (start_i + 1)]]):
@@ -278,8 +368,8 @@ class Sentiment:
     def _but_check(self, words_and_emoticons, sentiments):
         # check for modification in sentiment due to contrastive conjunction 'but'
         words_and_emoticons_lower = [str(w).lower() for w in words_and_emoticons]
-        if 'but' in words_and_emoticons_lower:
-            bi = words_and_emoticons_lower.index('but')
+        if "but" in words_and_emoticons_lower:
+            bi = words_and_emoticons_lower.index("but")
             for sentiment in sentiments:
                 si = sentiments.index(sentiment)
                 if si < bi:
@@ -347,49 +437,49 @@ class Sentiment:
 
 
 class Aspects:
-
     def __init__(self):
         "docstring"
         pass
 
-    
     def uploadfile(self):
         if os.path.exists("dict/bagofwords.db"):
             os.remove("dict/bagofwords.db")
-        client = sqlite3.connect('dict/bagofwords.db')
+        client = sqlite3.connect("dict/bagofwords.db")
         db = client.cursor()
-        db.execute('''CREATE TABLE words (id text, keyword text, parent text)''')
+        db.execute("""CREATE TABLE words (id text, keyword text, parent text)""")
         data = org.load("dict/bagofwords.org")
         for x in data[1:]:
             temp = {}
-            id = bytes(x.heading.lower(), 'utf-8')
+            id = bytes(x.heading.lower(), "utf-8")
             id = hashlib.md5(id).hexdigest()
             temp["_id"] = id
             temp["keyword"] = x.heading.lower()
             if x.parent is data:
                 temp["parent"] = ""
             else:
-                parent = bytes(x.parent.heading.lower(), 'utf-8')
+                parent = bytes(x.parent.heading.lower(), "utf-8")
                 parent = hashlib.md5(parent).hexdigest()
                 temp["parent"] = parent
-            db.execute("INSERT INTO words VALUES (?,?,?)", (temp["_id"], temp["keyword"], temp["parent"]))
+            db.execute(
+                "INSERT INTO words VALUES (?,?,?)",
+                (temp["_id"], temp["keyword"], temp["parent"]),
+            )
         client.commit()
         client.close()
 
-
     def getRelated(self, keyword):
-        client = sqlite3.connect('dict/bagofwords.db')
+        client = sqlite3.connect("dict/bagofwords.db")
         db = client.cursor()
         keyword = keyword.lower()
         keys = []
         keys.append(keyword)
-        h = bytes(keyword, 'utf-8')
+        h = bytes(keyword, "utf-8")
         h = hashlib.md5(h).hexdigest()
-        temp = db.execute('SELECT * FROM words WHERE id=?', (h,)).fetchone()
+        temp = db.execute("SELECT * FROM words WHERE id=?", (h,)).fetchone()
         if temp is None:
             return
         while temp[2] != "":
-            temp = db.execute('SELECT * FROM words WHERE id=?', (temp[2],))
+            temp = db.execute("SELECT * FROM words WHERE id=?", (temp[2],))
             temp = temp.fetchone()
             keys.append(temp[1])
         return keys

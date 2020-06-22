@@ -10,21 +10,24 @@ class Client:
         self.db = None
 
     def connect(self, Database="GP"):
-        client = pymongo.MongoClient("mongodb+srv://"+self.username+":"+self.password +
-                                     "@alhassantest-3226x.azure.mongodb.net/test?retryWrites=true&w=majority")
+        client = pymongo.MongoClient(
+            "mongodb+srv://"
+            + self.username
+            + ":"
+            + self.password
+            + "@alhassantest-3226x.azure.mongodb.net/test?retryWrites=true&w=majority"
+        )
         self.db = client[Database]
         return self.db
 
     def getData(self, Platform, Q=""):
         """Get PreProcessed Data """
         if Q != "":
-            Q = {
-                '$text': {'$search': Q}
-            }
-            #Q = '{ $text: { $search: ' + Q + ' } }'
-            return(self.db[Platform].find(Q, {'text': 1}, limit=100))
+            Q = {"$text": {"$search": Q}}
+            # Q = '{ $text: { $search: ' + Q + ' } }'
+            return self.db[Platform].find(Q).sort("created_at", -1).limit(30)
         else:
-            return(self.db[Platform].find())
+            return self.db[Platform].find().sort("created_at", -1).limit(30)
 
     # def getBetaData(self, Platform, Q=""):
     #     """Get PreProcessed Data """
