@@ -25,9 +25,9 @@ class Client:
         if Q != "":
             Q = {"$text": {"$search": Q}}
             # Q = '{ $text: { $search: ' + Q + ' } }'
-            return self.db[Platform].find(Q).sort("created_at", -1).limit(30)
+            return self.db[Platform].find(Q).sort("created_at", -1).limit(200)
         else:
-            return self.db[Platform].find().sort("created_at", -1).limit(30)
+            return self.db[Platform].find().sort("created_at", -1).limit(200)
 
     # def getBetaData(self, Platform, Q=""):
     #     """Get PreProcessed Data """

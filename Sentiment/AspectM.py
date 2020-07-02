@@ -81,10 +81,10 @@ def extract_aspects(text):
                 aspects = Aspects().getRelated(word)
                 if aspects:
                     if sentiment == "positive":
-                        positive_aspects.append(aspects)
+                        positive_aspects.append(aspects[0])
                     elif sentiment == "negative":
-                        negative_aspects.append(aspects)
+                        negative_aspects.append(aspects[0])
                     elif sentiment == "neutral":
-                        neutral_aspects.append(aspects)
+                        neutral_aspects.append(aspects[0])
 
     return positive_aspects, negative_aspects, neutral_aspects

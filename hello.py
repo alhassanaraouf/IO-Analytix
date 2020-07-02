@@ -9,6 +9,7 @@ from Sentiment.Sentiment import Sentiment
 from Sentiment import AspectM
 from Sentiment.API import TwitterApi
 from Sentiment.TextProcessing import Cleaning
+from collections import Counter
 
 db = Client("qabeel", "123456as")
 db2 = db.connect()
@@ -16,13 +17,14 @@ db2 = db.connect()
 
 def updateData(quary):
     data = TwitterApi().Search(quary)
-    print(data)
     db2.twitter.insert_many(data, ordered=False)
+    return data
 
-
-def cleanData(key):
-    data = db.getData("twitter", key)
+def cleanData(key, data=""):
+    if not data:
+        data = db.getData("twitter", key)
     temp = {}
+    temp2 = []
     S = Sentiment()
     c = Cleaning()
     for tweet in data:
@@ -41,11 +43,12 @@ def cleanData(key):
             "neutral_features": neutral_features,
         }
         print(temp)
+        temp2.append(temp)
         try:
             db2.cleantwitter.insert_one(temp)
         except:
-            continue
-
+            pass
+    return temp2
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hard to guess string"
@@ -77,32 +80,47 @@ def internal_server_error(e):
 
 def makedatalist(key, realtime=True):
     if realtime:
-        updateData(key)
-        cleanData(key)
-    temp = []
-    cur = db.getData("cleantwitter", key)
-    for doc in cur:
-        temp.append(doc)
+        d = updateData(key)
+        temp = cleanData(key, d)
+    else:
+        cur = db.getData("cleantwitter", key)
+        temp = []
+        for doc in cur:
+            temp.append(doc)
     data = []
-    temp2 = {}
     po = []
     ne = []
+    nu = []
+    tags = {'positive':[], "negative":[], "netural":[] }
+    tag = []
+    tempTag = []
     for x in temp:
-        print(x)
-        temp2["text"] = x["text"]
-        temp2["score"] = x["sentiment"]
-        temp2["negative_features"] = x["feature"]["negative_features"]
-        temp2["positive_features"] = x["feature"]["positive_features"]
-        temp2["neutral_features"] = x["feature"]["neutral_features"]
-        if temp2["score"] > 0:
-            po.append(temp2)
-        elif temp2["score"] < 0:
-            ne.append(temp2)
+        tags["positive"] = tags["positive"]  + x["feature"]["positive_features"]
+        tags["negative"] = tags["negative"] + x["feature"]["negative_features"]
+        tags["netural"] = tags["netural"] + x["feature"]["neutral_features"]
+        if x["sentiment"] > 0:
+            po.append(x)
+        elif x["sentiment"] < 0:
+            ne.append(x)
+        else:
+            nu.append(x)
+    tags["all"] = tags["positive"] + tags["negative"] + tags["netural"]
+    ptag = Counter(tags["positive"])
+    ntag = Counter(tags["negative"])
+    nutag = Counter(tags["netural"])
+    c = Counter(tags["all"]).most_common() 
+    for x in list(c):
+        x = x[0]
+        temp = [x, ptag[x], ntag[x], nutag[x], '' ]
+        tag.append(temp)
     data.append(len(temp))
     data.append(len(po))
     data.append(len(ne))
+    data.append(len(nu))
     data.append(po)
     data.append(ne)
+    data.append(nu)
+    data.append(tag)
     return data
 
 
@@ -116,7 +134,5 @@ def analysis():
     data = []
     form = KeyForm()
     if form.validate_on_submit():
-        print(form.realtime.data)
         data = makedatalist(form.key.data, form.realtime.data)
-        print(data)
     return render_template("analysis.html", base=base, form=form, data=data)
