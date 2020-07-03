@@ -1,4 +1,4 @@
-from flask import Flask, render_template  # , session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from flask_fontawesome import FontAwesome
@@ -10,9 +10,14 @@ from Sentiment import AspectM
 from Sentiment.API import TwitterApi
 from Sentiment.TextProcessing import Cleaning
 from collections import Counter
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
+
 
 db = Client("qabeel", "123456as")
 db2 = db.connect()
+todo = db2.USERS
 
 
 def updateData(quary):
@@ -126,7 +131,7 @@ def makedatalist(key, realtime=True):
 
 @app.route("/")
 def index():
-    return render_template("index.html", base=base)
+    return render_template("index.html", base=base, session=session)
 
 
 @app.route("/analysis", methods=("GET", "POST"))
@@ -135,4 +140,83 @@ def analysis():
     form = KeyForm()
     if form.validate_on_submit():
         data = makedatalist(form.key.data, form.realtime.data)
-    return render_template("analysis.html", base=base, form=form, data=data)
+    return render_template("analysis.html", base=base, form=form, data=data, session=session)
+
+@app.route('/signin')
+def signin():
+    if 'user' in session:
+        user = session["user"]
+        return redirect(url_for('index'))
+    return render_template('HOME.html', base=base, session=session)
+
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+
+    if request.method == 'POST':
+        login_user = todo.find_one({'username': request.form['username']})
+
+        if login_user:
+            if check_password_hash(login_user['password'], request.form['password']):
+                user= request.form['username']
+                session["user"] = user
+                return redirect(url_for('signin'))
+        else:
+            if "user" in session:
+                return redirect(url_for('signin'))
+
+        return 'Invalid username/password combination'
+    return redirect(url_for('signin'))
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        existing_user = todo.find_one({'username': request.form['username'
+                ]})
+
+        if existing_user is None:
+            hashpass = generate_password_hash(request.form['password'])
+            temp = {'username': request.form['username'], 'password': hashpass, 'email': request.form['email'], 'fullname': request.form['fullname']}
+            todo.insert_one(temp)
+            user= request.form['username']
+            session["user"] = user
+            return redirect(url_for('signin'))
+
+        return 'That username already exists!'
+
+    return render_template('register.html', base=base, session=session)
+
+@app.route('/logout')
+def logout():
+    session.pop("user",None)
+    return redirect(url_for('signin'))
+
+
+@app.route('/crud')
+def CRUD():
+
+	 data = todo.find()
+	 return render_template('CRUD.html', todo=data, base=base, session=session)
+
+
+@app.route('/delete/<string:username>', methods = {'GET'})
+def delete(username):
+	 flash("Record Has Been Deleted Successfully")
+	 todo.delete_one({'username' : username})
+	 data = todo.find()
+	 return render_template('CRUD.html', todo=data, base=base, session=session)
+
+@app.route('/update/<string:username>',methods=['POST','GET'])
+def update(username):
+
+	if request.method == 'POST':
+		if todo.find_one({'username': username}):
+			return("Username Already Exist")
+		todo.update_one( {'username' : username},{'$set': {'fullname': request.form['fullname'], 'email': request.form['email'], 'username': request.form['username']}})
+
+		flash("Data Updated Successfully")
+		data = todo.find()
+		return redirect(url_for('CRUD'))
+
