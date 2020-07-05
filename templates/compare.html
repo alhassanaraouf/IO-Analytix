@@ -7,10 +7,12 @@
 {% block head %}
 {{ super() }}
 
-{% if data  %}
+{% if data or data2  %}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
+
+{% if data  %}
       google.charts.setOnLoadCallback(drawChart1);
       google.charts.setOnLoadCallback(drawChart2);
 
@@ -55,7 +57,56 @@
 
         chart.draw(data, options);
       }
+{% endif %}
+
+{% if data2  %}
+
+      google.charts.setOnLoadCallback(drawChart3);
+      google.charts.setOnLoadCallback(drawChart4);
+
+      function drawChart3() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['State', '#'],
+		['Postive',     {{ data2[1] }}],
+		['Negative',      {{ data2[2] }}],
+		['Netural',  {{data2[3] }}]
+        ]);
+
+        var options = {
+          title: 'Twitter Statistics',
+		pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+        chart.draw(data, options);
+      }
+
+      function drawChart4() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Genre', 'Postive', 'Negative', 'Netural',  { role: 'annotation' } ],
+        {% for item in data2[7][0:3] %}
+        [ '{{ item[0] }}', {{ item[1] }} , {{ item[2] }} , {{ item[3] }} , ''],
+        {% endfor %}
+      ]);
+
+      var options = {
+        // width: 600,
+        // height: 400,
+        title: 'Keywords Statistics',
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        // isStacked: true
+      };
+
+        var chart = new google.visualization.BarChart(document.getElementById('barchart2'));
+
+        chart.draw(data, options);
+      }
     </script>
+{% endif %}
 {% endif %}
     {% endblock %}
 
@@ -121,50 +172,51 @@
 </div>
 
 
+{% endif %}
+
+<br>
 
 
-
-<div class="container">
+{% if data2  %}
+<div id="feature" class="container">
   <div class="row">
-    <div class="col-sm">
-<h2> Some Positive Posts </h2>
-
-<hr>
-
-{% for item in data[4][0:10] %}
-
-<p> {{ item["text"] }} </p>
-
-<hr>
-{% endfor %}
+    <div class="col align-self-center">
+      <p class="text-center">
+	Ratio:
+	{{  "{:.2f}".format(data2[1]/data2[2]) if data2[2] != 0 else "infinte"     }}
+      </p>
     </div>
-    <div class="col-sm">
-<h2> Some Negative Posts </h2>
-
-<hr>
-
-
-{% for item in data[5][0:10] %}
-
-<p> {{ item["text"] }} </p>
-
-<hr>
+    <div class="col">
+      <p class="text-center">
+	Top Keyword
+{% for item in data2[7][0:3] %}
+       {{ item[0] }},
 {% endfor %}
-
-
+      </p>
     </div>
-    <div class="col-sm">
-<h2> Some Netural Posts </h2>
-
-<hr>
-
-{% for item in data[5][0:10] %}
-
-<p> {{ item["text"] }} </p>
-
-<hr>
-{% endfor %}
+    <div class="col">
+      <p class="text-center">
+	Most user Content Type
+      </p>
     </div>
+    <div class="col">
+      <p class="text-center">
+	# of People: 
+      </p>
+    </div>
+  </div>
+  
+</div>
+
+
+<div class="container-fluid">
+  <div class="row">
+   <div class="col">
+     <div id="piechart2" style="width: 640px; height: 500px;"></div>
+   </div>
+   <div class="col">
+     <div id="barchart2" style="width: 640px; height: 500px;"></div>
+   </div>
   </div>
 </div>
 

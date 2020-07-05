@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+<h1> Username : {{ session['user'] }} </h1>
+
+
+<h2> History </h2>
+
+<ol>
+{% for item in data['history']%}
+
+<li> {{ item }} </li>
+
+{% endfor %}
+
+</ol>
+{% endblock %}

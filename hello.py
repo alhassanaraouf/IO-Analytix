@@ -73,6 +73,13 @@ class KeyForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
+class Key2Form(FlaskForm):
+    key = StringField("Enter Key Word", validators=[DataRequired()])
+    key2 = StringField("Enter Key Word", validators=[DataRequired()])
+    realtime = BooleanField("Do You Wanted with Realtime Data (Take Some Time)")
+    submit = SubmitField("Submit")
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
@@ -96,7 +103,7 @@ def makedatalist(key, realtime=True):
     po = []
     ne = []
     nu = []
-    tags = {'positive':[], "negative":[], "netural":[] }
+    tags = {'positive': [], "negative": [], "netural": [] }
     tag = []
     tempTag = []
     for x in temp:
@@ -134,13 +141,41 @@ def index():
     return render_template("index.html", base=base, session=session)
 
 
+@app.route("/profile")
+def profile():
+    data = {}
+    data['history'] =  todo.find_one({ 'username': session['user']  })['history']
+    return render_template("profile.html", base=base, session=session, data=data)
+
+
 @app.route("/analysis", methods=("GET", "POST"))
 def analysis():
     data = []
     form = KeyForm()
     if form.validate_on_submit():
         data = makedatalist(form.key.data, form.realtime.data)
+        todo.update(
+    { 'username': session['user']  }, 
+    {'$push': {'history': form.key.data }}
+)
     return render_template("analysis.html", base=base, form=form, data=data, session=session)
+
+
+
+@app.route("/compare", methods=("GET", "POST"))
+def compare():
+    data = []
+    data2 = []
+    form = Key2Form()
+    if form.validate_on_submit():
+        data = makedatalist(form.key.data, form.realtime.data)
+        data2 = makedatalist(form.key2.data, form.realtime.data)
+        todo.update_one(
+    { 'username': session['user']  }, 
+    {'$push': {'history': { '$each': [ form.key.data, form.key2.data] }  }}
+)
+    return render_template("compare.html", base=base, form=form, data=data, data2=data2 ,session=session)
+
 
 @app.route('/signin')
 def signin():
@@ -178,7 +213,7 @@ def register():
 
         if existing_user is None:
             hashpass = generate_password_hash(request.form['password'])
-            temp = {'username': request.form['username'], 'password': hashpass, 'email': request.form['email'], 'fullname': request.form['fullname']}
+            temp = {'username': request.form['username'], 'password': hashpass, 'email': request.form['email'], 'fullname': request.form['fullname'], 'history': []}
             todo.insert_one(temp)
             user= request.form['username']
             session["user"] = user
