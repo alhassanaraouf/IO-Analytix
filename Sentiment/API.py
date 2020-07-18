@@ -20,7 +20,7 @@ class TwitterApi:
         self.auth = BearerAuth(bearerkey)
         self.base = "https://api.twitter.com/1.1/"
 
-    def Search(self, quary, NumberOfPages=2, lang="en"):
+    def Search(self, quary, NumberOfPages=1, lang="en"):
         """test"""
         PageCounter = 0
         params = {"q": quary, "count": 100, "lang": lang, "resulty_type": "recent"}
@@ -36,10 +36,10 @@ class TwitterApi:
             tweets = tweets + res_json
         return tweets
 
-    def AccountTweets(self, AccountName, NumberOfPages):
+    def AccountTweets(self, AccountName, NumberOfPages=1):
         """test"""
         PageCounter = 0
-        params = {"screen_name": AccountName, "count": 1, "exclude_replies": "true"}
+        params = {"screen_name": AccountName, "count": 100, "exclude_replies": "true"}
         api = "statuses/user_timeline.json"
         url = self.base + api
 
