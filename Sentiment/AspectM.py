@@ -69,6 +69,19 @@ def cleaning(text):
 
 
 def normalize(t):
+    """
+    Take The NNsplit output and transform it to deepsegment like output to work with rest of the code
+    
+    Parameters
+    ----------
+    t : list
+        list of lists for word and sentences that formed the original text
+
+    Returns
+    -------
+    normalized : list
+    list contains Sentences.
+    """   
     temp = []
     for x in t[0]:
         sentences = ""
@@ -80,6 +93,19 @@ def normalize(t):
 
 
 def SplitingText(text):
+    """
+    split text into Sentences
+    
+    Parameters
+    ----------
+    text : string
+        take text as input.
+
+    Returns
+    -------
+    normalized : list
+    list contains Sentences.
+    """    
     splitter = NNSplit("en")
     text = text.replace("but", " ")
     text = [text]
