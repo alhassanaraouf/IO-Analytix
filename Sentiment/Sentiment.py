@@ -194,12 +194,22 @@ class Sentiment:
         return stripped
 
     def words_and_emoticons(self, text):
+        """
+        Removes leading and trailing puncutation
+        Leaves contractions and most emoticons
+            Does not preserve punc-plus-letter emoticons (e.g. :D)
+        """
         text_list = []
         for word in text.split():
             text_list.append(self._strip_punc_if_word(word))
         return text_list
 
     def is_cap_diff(self, words):
+        """
+       Check whether just some words in the input are ALL CAPS
+        :param list words: The words to inspect
+        :returns: `True` if some but not all items in `words` are ALL CAPS
+        """
         is_different = False
         allcap_words = 0
         for word in words.split():
@@ -230,6 +240,11 @@ class Sentiment:
         return scalar
 
     def polarity_scores(self, tweet):
+        """
+        Return a float for sentiment strength based on the input text.
+        Positive values are positive valence, negative value are negative
+        valence.
+        """
         # convert emojis to their textual descriptions
         text_no_emoji = ""
         prev_space = True
@@ -323,6 +338,9 @@ class Sentiment:
         return sentiments
 
     def _negation_check(self, valence, words_and_emoticons, start_i, i):
+        """
+        check if the text has negation words or not 
+        """
         words_and_emoticons_lower = [str(w).lower() for w in words_and_emoticons]
         if start_i == 0:
             # 1 word preceding lexicon word (w/o stopwords)
@@ -366,7 +384,9 @@ class Sentiment:
         return valence
 
     def _but_check(self, words_and_emoticons, sentiments):
-        # check for modification in sentiment due to contrastive conjunction 'but'
+        """ 
+        check for modification in sentiment due to contrastive conjunction 'but' 
+        """
         words_and_emoticons_lower = [str(w).lower() for w in words_and_emoticons]
         if "but" in words_and_emoticons_lower:
             bi = words_and_emoticons_lower.index("but")
@@ -381,14 +401,18 @@ class Sentiment:
         return sentiments
 
     def _punctuation_emphasis(self, text):
-        # add emphasis from exclamation points and question marks
+        """
+        add emphasis from exclamation points and question marks 
+        """
         ep_amplifier = self._amplify_ep(text)
         qm_amplifier = self._amplify_qm(text)
         punct_emph_amplifier = ep_amplifier + qm_amplifier
         return punct_emph_amplifier
 
     def _amplify_ep(self, text):
-        # check for added emphasis resulting from exclamation points (up to 4 of them)
+        """
+        check for added emphasis resulting from exclamation points (up to 4 of them)
+        """
         ep_count = text.count("!")
         if ep_count > 4:
             ep_count = 4
@@ -398,7 +422,9 @@ class Sentiment:
         return ep_amplifier
 
     def _amplify_qm(self, text):
-        # check for added emphasis resulting from question marks (2 or 3+)
+        """
+        check for added emphasis resulting from question marks (2 or 3+) 
+        """
         qm_count = text.count("?")
         qm_amplifier = 0
         if qm_count > 1:
