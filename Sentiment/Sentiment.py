@@ -468,6 +468,9 @@ class Aspects:
         pass
 
     def uploadfile(self):
+        """
+        Parse The Keywords Org File and add them to the sqlite database in same structure 
+        """
         if os.path.exists("dict/bagofwords.db"):
             os.remove("dict/bagofwords.db")
         client = sqlite3.connect("dict/bagofwords.db")
@@ -494,6 +497,9 @@ class Aspects:
         client.close()
 
     def getRelated(self, keyword):
+        """
+        Take Keyword to search for it in keywords database and return the keywords and the category it belongs to
+        """
         client = sqlite3.connect("dict/bagofwords.db")
         db = client.cursor()
         keyword = keyword.lower()
