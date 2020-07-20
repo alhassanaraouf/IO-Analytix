@@ -1,23 +1,27 @@
 from flask import Flask, render_template, session, redirect, url_for, flash, request
-from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-from flask_fontawesome import FontAwesome
-from wtforms import StringField, SubmitField, BooleanField
+from flask_bootstrap import Bootstrap # Adding Bootstrap to Website
+from flask_fontawesome import FontAwesome # Adding FontAwesome Icons to Website
+# Forms Definitions Helper
+from flask_wtf import FlaskForm 
+from wtforms import StringField, SubmitField, BooleanField 
 from wtforms.validators import DataRequired
-from Sentiment.Database import Client
-from Sentiment.Sentiment import Sentiment
-from Sentiment import AspectM
-from Sentiment.API import TwitterApi
-from Sentiment.TextProcessing import Cleaning
+
+from Sentiment.Database import Client # Connecting and dealing with Database
+from Sentiment.Sentiment import Sentiment # Sentiment Analysis Code
+from Sentiment import AspectM  # Aspect Analysis Code
+from Sentiment.API import TwitterApi #  for Fetching Data From Twitter
+from Sentiment.TextProcessing import Cleaning # Text Processing And Cleaning Functions
 from collections import Counter
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# Establish Database Connection 
 db = Client("qabeel", "123456as")
 db2 = db.connect()
 todo = db2.USERS
 
 
 def updateData(quary):
+    """ Taking Search Query, then using this query to fetch data from twitter and add the returned data in the Database (No Return) """
     data = TwitterApi().Search(quary)
     for item in data:
         try:
@@ -28,6 +32,26 @@ def updateData(quary):
 
 
 def cleanData(key, data=""):
+    """ get latest added data from the processed collection in The Database and to process it and make in the shape will be used in all other operation
+    then add it to cleaned collection in the Database
+    add Document is like
+
+
+    {
+
+    id: Numeric ID
+    text: Text String
+    created_at: date and time like (2020-07-13 05:26:45)
+    sentiment: score from -1 to 1
+    features: {
+            positive_features: [],      keyword for positive features
+            negative_features: [],      keyword for negative features
+            neutral_features: [],       keyword for neutral features
+        }
+
+    }
+    (No Return)
+    """
     data = db.getData("twitter", key)
     temp = {}
     temp2 = []
@@ -55,6 +79,7 @@ def cleanData(key, data=""):
             pass
 
 
+# App Initiation 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hard to guess string"
 app.config["BOOTSTRAP_SERVE_LOCAL"] = True
@@ -64,22 +89,31 @@ Bootstrap(app)
 FontAwesome(app)
 # app = ProfilerMiddleware(app)
 
+
+# Basic Data Needed in Every Page
 base = {}
 base["name"] = "IO-Analytix"
 
 
+# Forms Definitions 
+
 class KeyForm(FlaskForm):
+    """ Form in The Analysis Page With One Text Box  """
     key = StringField("Enter Key Word", validators=[DataRequired()])
     realtime = BooleanField("Do You Wanted with Realtime Data (Take Some Time)")
     submit = SubmitField("Submit")
 
 
 class Key2Form(FlaskForm):
+    """ Form in The Compare Page With Two Text Boxes  """
     key = StringField("Enter Key Word", validators=[DataRequired()])
     key2 = StringField("Enter Key Word", validators=[DataRequired()])
     realtime = BooleanField("Do You Wanted with Realtime Data (Take Some Time)")
     submit = SubmitField("Submit")
 
+
+
+# Requests Error Handling
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -92,7 +126,8 @@ def internal_server_error(e):
 
 
 def makedatalist(key, realtime=True):
-    if realtime:
+    """ get The Data From The Cleaned Collection Form The Database to be sent to View Function to show the Data to the Users  (Return data) """
+    if realtime: # if User Want The Data in Realtime or not ( fetched only from previous data stored in the Database )
         updateData(key)
         cleanData(key)
     temp = db.getData("cleantwitter", key)
@@ -133,6 +168,19 @@ def makedatalist(key, realtime=True):
     data.append(tag)
     return data
 
+# View Functions
+""" all view functions show the specified html page in return statement with 3 variables
+
+base: basic data needed for every page like name
+
+form: in Analysis and Compare page only to render the form in the browser
+
+data: in Aanlysis and Compare Only, it the data that user asked for the resualt of analysis 
+
+session: Session for user management 
+
+"""
+
 
 @app.route("/")
 def index():
@@ -150,7 +198,7 @@ def profile():
 def analysis():
     data = []
     form = KeyForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit(): # on form submission get the data and add the query to history if user logged in
         data = makedatalist(form.key.data, form.realtime.data)
         if "user" in session:
             todo.update(
@@ -166,7 +214,7 @@ def compare():
     data = []
     data2 = []
     form = Key2Form()
-    if form.validate_on_submit():
+    if form.validate_on_submit():  # on form submission get the data and add the two query to history if user logged in
         data = makedatalist(form.key.data, form.realtime.data)
         data2 = makedatalist(form.key2.data, form.realtime.data)
         if "user" in session:
@@ -176,7 +224,7 @@ def compare():
             )
     return render_template(
         "compare.html", base=base, form=form, data=data, data2=data2, session=session
-    )
+    ) # data2 here is the same like data but for the second query
 
 
 @app.route("/signin")

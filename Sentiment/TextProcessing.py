@@ -1,11 +1,12 @@
 import warnings
-import re
+import re # Regular Expression
 import json
 import requests
-import sqlite3
-from enchant.checker import SpellChecker
-from langdetect import detect, DetectorFactory
-from datetime import datetime
+import sqlite3 # used for storing tags (sqlite is small database engine)
+from enchant.checker import SpellChecker # Used For Spell Checking and Correction
+from langdetect import detect, DetectorFactory # Used For Language Detection
+# For Changing The Time Format
+from datetime import datetime 
 from email.utils import parsedate_tz, mktime_tz
 
 
@@ -18,6 +19,7 @@ class Cleaning:
         pass
 
     def Spellcorection(self, text):
+        """ Take english text and Correct all the spelling mistakes and return the resualt  """
         client = sqlite3.connect("dict/bagofwords.db")
         db = client.cursor()
         temp = db.execute("SELECT * FROM words").fetchall()
@@ -31,7 +33,7 @@ class Cleaning:
         return spell.get_text()
 
     def preprocess(self, text):
-
+        """ fix the text for spllings and remove all unnecessary things   """
         # Remove username:
         text = re.sub("@[^\s]+", "", text)
         # Remove Hashtag
@@ -52,16 +54,19 @@ class Cleaning:
         return text
 
     def timeProcessing(self, time):
+        """ tranfrorm the twitter data and time format to format a7sn  """
         timestamp = mktime_tz(parsedate_tz(time))
         s = str(datetime.fromtimestamp(timestamp))
         return s
 
 
 class Translation:
+    """ Helper Class When Dealing with Other Langauges the English  """
     def __init__(self):
         pass
 
     def translate(self, text, to_lang, from_lang=""):
+        """ Take Text in Other Languages, then detect the Languages and translated to English  """
         if from_lang == "":
             from_lang = detect(text)
         api_url = "http://mymemory.translated.net/api/get?q={}&langpair={}|{}".format(

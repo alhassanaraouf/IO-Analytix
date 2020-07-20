@@ -10,6 +10,7 @@ class Client:
         self.db = None
 
     def connect(self, Database="GP"):
+        """ get the username and the password passed to the class (and Optionaly the Database You Want To Connect to It) and Connect to It :"DD """
         client = pymongo.MongoClient(
             "mongodb+srv://"
             + self.username
@@ -21,7 +22,11 @@ class Client:
         return self.db
 
     def getData(self, Platform, Q=""):
-        """Get PreProcessed Data """
+        """
+        fetch The Data from any Collection in the Connected Database
+        Take name of The Collection, and Query 
+        Query is Optional if not provided it will fetch last entires
+        """
         if Q != "":
             Q = {"$text": {"$search": Q}}
             # Q = '{ $text: { $search: ' + Q + ' } }'
