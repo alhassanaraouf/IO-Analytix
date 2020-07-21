@@ -297,3 +297,10 @@ ul.social-footer2 li a {
   transition: all 250ms ease-in-out 0s;
 }
 
+
+.center {
+  /* position: absolute; */
+  left: 0;
+  right: 0;
+  margin: auto;   
+}
