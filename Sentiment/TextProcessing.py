@@ -24,6 +24,10 @@ class Cleaning:
         db = client.cursor()
         temp = db.execute("SELECT * FROM words").fetchall()
         spell = SpellChecker("en_US")
+        with open("dict/privet_dict.txt") as f:
+            content = f.readlines()
+        for x in content:
+            spell.add(x.strip())
         for x in temp:
             spell.add(x[1])
         spell.set_text(text)
