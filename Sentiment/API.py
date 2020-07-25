@@ -21,7 +21,7 @@ class TwitterApi:
         self.auth = BearerAuth(bearerkey)
         self.base = "https://api.twitter.com/1.1/"
 
-    def Search(self, quary, NumberOfPages=1, lang="en"):
+    def Search(self, quary, NumberOfPages=3, lang="en"):
         """ Search twitter with the Query Provided 
             take other two optionaly arguments
             NumberOfPages: The Page is 100 Tweets

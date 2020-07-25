@@ -30,9 +30,9 @@ class Client:
         if Q != "":
             Q = {"$text": {"$search": Q}}
             # Q = '{ $text: { $search: ' + Q + ' } }'
-            return list(self.db[Platform].aggregate([{ "$match": Q }, { "$sort": { "created_at": pymongo.DESCENDING, }}, { "$limit": 100 }]))
+            return list(self.db[Platform].aggregate([{ "$match": Q }, { "$sort": { "created_at": pymongo.DESCENDING, }}, { "$limit": 300 }]))
         else:
-            return list(self.db[Platform].find().sort("created_at", pymongo.DESCENDING).limit(100))
+            return list(self.db[Platform].find().sort("created_at", pymongo.DESCENDING).limit(300))
 
     # def getBetaData(self, Platform, Q=""):
     #     """Get PreProcessed Data """
