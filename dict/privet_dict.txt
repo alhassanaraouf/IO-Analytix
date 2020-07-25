@@ -35,5 +35,4 @@ wiko
 panasonic
 verykool
 plum
-xperia
 ericsson
