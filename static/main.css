@@ -314,7 +314,7 @@ ul.social-footer2 li a {
   margin: auto;   
 }
 
-#feature > div > div > p{
+#feature > div > div > p, .textcenter{
   margin: 0;
   position: absolute;
   top: 50%;
@@ -322,7 +322,6 @@ ul.social-footer2 li a {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-
 
 
 .btn {
