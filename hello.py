@@ -131,6 +131,10 @@ def makedatalist(key, realtime=True):
         updateData(key)
         cleanData(key)
     temp = db.getData("cleantwitter", key)
+    if len(temp) < 120:
+        updateData(key)
+        cleanData(key)
+    temp = db.getData("cleantwitter", key)
     data = []
     po = []
     ne = []
