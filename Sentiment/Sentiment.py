@@ -282,6 +282,7 @@ class Sentiment:
             # check for "no" as negation for an adjacent lexicon item vs "no" as its own stand-alone lexicon item
             if (
                 item_lowercase == "no"
+                and 0 <= i + 1 < len(words_emoticons)
                 and words_emoticons[i + 1].lower() in lexicon_dict
             ):
                 # don't use valence of "no" as a lexicon item. Instead set it's valence to 0.0 and negate the next item
