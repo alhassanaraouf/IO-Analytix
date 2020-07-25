@@ -41,7 +41,7 @@ class TwitterApi:
             tweets = tweets + res_json
         return tweets
 
-    def AccountTweets(self, AccountName, NumberOfPages=1):
+    def AccountTweets(self, AccountName, NumberOfPages=3):
         """ Same as Search Function but take Account Name instead of Query and Return tweets by that user """
         PageCounter = 0
         params = {"screen_name": AccountName, "count": 100, "exclude_replies": "true"}

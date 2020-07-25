@@ -31,9 +31,21 @@ class Client:
             Q = {"$text": {"$search": Q}}
             # Q = '{ $text: { $search: ' + Q + ' } }'
             return list(self.db[Platform].aggregate([{ "$match": Q }, { "$sort": { "created_at": pymongo.DESCENDING, }}, { "$limit": 300 }]))
-        else:
-            return list(self.db[Platform].find().sort("created_at", pymongo.DESCENDING).limit(300))
+        else:  
+            return list(self.db[Platform].aggregate([{ "$sort": { "created_at": pymongo.DESCENDING, }}, { "$limit": 300 }]))
 
+    def getAccountData(self, Platform, Q=""):
+        """
+        fetch The Data from any Collection in the Connected Database
+        Take name of The Collection, and Query 
+        Query is Optional if not provided it will fetch last entires
+        """
+        if Q != "":
+            Q = {"user.screen_name":  Q}
+            # Q = '{ $text: { $search: ' + Q + ' } }'
+            return list(self.db[Platform].aggregate([{ "$match": Q }, { "$sort": { "created_at": pymongo.DESCENDING, }}, { "$limit": 300 }]))
+        else:
+            return list(self.db[Platform].aggregate([{ "$sort": { "created_at": pymongo.DESCENDING, }}, { "$limit": 300 }]))
     # def getBetaData(self, Platform, Q=""):
     #     """Get PreProcessed Data """
     #     if Q != "":

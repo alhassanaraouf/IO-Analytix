@@ -20,9 +20,12 @@ db2 = db.connect()
 todo = db2.USERS
 
 
-def updateData(quary):
+def updateData(quary, datatype="Query"):
     """ Taking Search Query, then using this query to fetch data from twitter and add the returned data in the Database (No Return) """
-    data = TwitterApi().Search(quary)
+    if datatype == "Query":
+        data = TwitterApi().Search(quary)
+    elif datatype == "Account":
+        data = TwitterApi().AccountTweets(quary)
     for item in data:
         try:
             db2.twitter.insert_one(item)
@@ -31,7 +34,7 @@ def updateData(quary):
     # db2.twitter.insert_many(data, ordered=False)
 
 
-def cleanData(key, data=""):
+def cleanData(key, data="", datatype="Query"):
     """ get latest added data from the processed collection in The Database and to process it and make in the shape will be used in all other operation
     then add it to cleaned collection in the Database
     add Document is like
@@ -52,7 +55,11 @@ def cleanData(key, data=""):
     }
     (No Return)
     """
-    data = db.getData("twitter", key)
+    if datatype == "Query":
+        data = db.getData("twitter", key)
+    elif datatype == "Account":
+        print(datatype)
+        data = db.getAccountData("twitter", key)
     temp = {}
     temp2 = []
     S = Sentiment()
@@ -61,6 +68,7 @@ def cleanData(key, data=""):
         temp["_id"] = tweet["id_str"]
         temp["text"] = c.preprocess(tweet["text"])
         temp["created_at"] = c.timeProcessing(tweet["created_at"])
+        temp["user"] = {"id_str": tweet["user"]["id_str"], "screen_name": tweet["user"]["screen_name"].lower()}
         temp["sentiment"] = S.polarity_scores(tweet["text"])["compound"]
         (
             positive_features,
@@ -125,17 +133,24 @@ def internal_server_error(e):
     return render_template("500.html"), 500
 
 
-def makedatalist(key, realtime=True):
+def makedatalist(key, realtime=True, datatype="Query"):
     """ get The Data From The Cleaned Collection Form The Database to be sent to View Function to show the Data to the Users  (Return data) """
-    if realtime: # if User Want The Data in Realtime or not ( fetched only from previous data stored in the Database )
-        updateData(key)
-        cleanData(key)
-    temp = db.getData("cleantwitter", key)
-    print(len(temp))
-    if len(temp) < 80:
-        updateData(key)
-        cleanData(key)
-    temp = db.getData("cleantwitter", key)
+
+    if datatype == "Query":
+        if realtime: # if User Want The Data in Realtime or not ( fetched only from previous data stored in the Database )
+            updateData(key)
+            cleanData(key)
+        temp = db.getData("cleantwitter", key)
+        print(len(temp))
+        if len(temp) < 80:
+            updateData(key)
+            cleanData(key)
+        temp = db.getData("cleantwitter", key)
+    elif datatype == "Account":
+        if realtime: # if User Want The Data in Realtime or not ( fetched only from previous data stored in the Database )
+            updateData(key, datatype=datatype)
+            cleanData(key, datatype=datatype)
+        temp = db.getAccountData("cleantwitter", key)
     data = []
     po = []
     ne = []
@@ -211,6 +226,21 @@ def analysis():
             )
     return render_template(
         "analysis.html", base=base, form=form, data=data, session=session
+    )
+
+
+@app.route("/account", methods=("GET", "POST"))
+def account():
+    data = []
+    form = KeyForm()
+    if form.validate_on_submit(): # on form submission get the data and add the query to history if user logged in
+        data = makedatalist(form.key.data.lower(), form.realtime.data, datatype="Account")
+        if "user" in session:
+            todo.update(
+                {"username": session["user"]}, {"$push": {"history": form.key.data}}
+            )
+    return render_template(
+        "account.html", base=base, form=form, data=data, session=session
     )
 
 
