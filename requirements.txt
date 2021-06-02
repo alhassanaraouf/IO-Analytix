@@ -26,6 +26,6 @@ requests==2.24.0
 six==1.15.0
 https://download.pytorch.org/whl/cpu/torch-1.5.1%2Bcpu-cp36-cp36m-linux_x86_64.whl
 tqdm==4.46.1
-urllib3==1.25.9
+urllib3==1.26.5
 Werkzeug==1.0.1
 WTForms==2.3.1
