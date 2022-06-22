@@ -16,7 +16,7 @@ langdetect==1.0.8
 MarkupSafe==1.1.1
 nltk==3.5
 nnsplit==0.2.2
-numpy==1.19.0
+numpy==1.22.0
 orgparse==0.1.4
 pyenchant==3.1.1
 pymongo==3.10.1
